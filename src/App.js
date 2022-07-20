@@ -1,33 +1,27 @@
-import logo from './logo.svg';
-import {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import './App.css';
 import Cropper from 'cropperjs';
 
 import 'cropperjs/dist/cropper.min.css';
 
-function App() {
-  const [imageDestination, setImageDestination] = useState('');
-  const imageRef = useRef();
-  useEffect(()=>{
-    console.log(imageRef);
-    const cropper = new Cropper(imageRef.current, {
-      zoomable: true,
-      scalable: true,
-      aspectRatio: 1,
-      crop: ()=>{        
-        const canvas = cropper.getCroppedCanvas();
-        setImageDestination(canvas.toDataURL("image/png"));
-      }
-    });
-  }, [])
+import ImageCropper from './components/ImageCropper';
+
+function App() {  
+  const [selectedFile, setSelectedFile] = useState(null);
+  const onFileSelect = (e)=>{
+    const file = e.target.files[0];
+    const image = URL.createObjectURL(file);
+    setSelectedFile(image);
+  }    
   return (
-    <div className="App">
-      <input type='file' accept="*.jpg, *.png, *.jpeg" name="file" />
-      <div className="image-container">
-        <img src={logo} ref={imageRef} alt="source " />
+    <React.Fragment>
+      <div className="App">
+        <input type='file' accept="*.jpg, *.png, *.jpeg" name="file" onChange={onFileSelect}/>        
       </div>
-      <img className="image-preview" src={imageDestination} alt="source " />
-    </div>
+  
+      {selectedFile?<ImageCropper image={selectedFile} /> : <div><h2>No file Selected yet</h2></div>}
+    
+    </React.Fragment>
   );
 }
 

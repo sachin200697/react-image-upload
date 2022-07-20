@@ -1,0 +1,18 @@
+.image-container-container{
+    display: block;
+    margin-top: 50px;
+}
+
+.image-container{
+    box-sizing: border-box;
+    width:500px;
+    display: flex;    
+    border:1px solid black;    
+  }
+  
+  .image-preview{
+    width:132.28px; 
+    height: 170.07px;
+    border: 1px solid rgb(90, 90, 134); 
+  }
+  
